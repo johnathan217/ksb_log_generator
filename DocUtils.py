@@ -28,7 +28,7 @@ class DocUtils:
         return text
 
     @staticmethod
-    def string_to_doc(text: str, file_path: str) -> None:
+    def string_to_doc(text: str, file_path: str, verbose=False) -> None:
         doc: Document = Document()
         lines: List[str] = text.split('\n')
 
@@ -44,6 +44,7 @@ class DocUtils:
                 if table_data:
                     df: pd.DataFrame = pd.read_csv(StringIO('\n'.join(table_data)), sep='\t')
                     df = df.fillna(' ')
+                    if verbose: print(df.to_string())
                     table = doc.add_table(rows=df.shape[0], cols=df.shape[1])
                     for i, row in df.iterrows():
                         for j, cell in enumerate(row):

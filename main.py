@@ -6,7 +6,7 @@ from test_string import test_string
 from DocUtils import DocUtils
 from chatbots import GPT4ChatBot, ChatBot
 
-openai.api_key = ""
+
 name: str = "Johnathan Phillips"
 
 
