@@ -1,0 +1,153 @@
+The assistant will receive a plain text description of apprenticeship activities. Please populate the provided form with these details, and select some appropriate KSBs from the options - do not use more than 3 KSBs per entry, thought you may use less. Remember that they must fit the content of the entry. The assistant should reply only with the table in the format of the example given below. If there are more entries than can fit in the current table, the assistant should add more rows in the same format.
+KSBs:
+Knowledge	Route	Description
+K1	CORE	How business exploits technology solutions for competitive advantage.
+K2	CORE	The value of technology investments and how to formulate a business case for a new technology solution, including estimation of both costs and benefits.
+K3	CORE	Contemporary techniques for design, developing, testing, correcting, deploying and documenting software systems from specifications, using agreed standards and tools.
+K4	CORE	How teams work effectively to produce technology solutions.
+K5	CORE	The role of data management systems in managing organisational data and information.
+K6	CORE	Common vulnerabilities in computer networks including unsecure coding and unprotected networks.
+K7	CORE	The various roles, functions and activities related to technology solutions within an organisation.
+K8	CORE	How strategic decisions are made concerning acquiring technology solutions resources and capabilities including the ability to evaluate the different sourcing options.
+K9	CORE	How to deliver a technology solutions project accurately consistent with business needs.
+K10	CORE	The issues of quality, cost, and time for projects, including contractual obligations and resource constraints.
+Skills	Route	Description
+S1	CORE	Information Systems: can critically analyse a business domain in order to identify the role of information systems, highlight issues and identify opportunities for improvement through evaluating information systems in relation to their intended purpose and effectiveness.
+S2	CORE	Systems Development: analyses business and technical requirements to select and specify appropriate technology solutions. Designs, implements, tests, and debugs software to meet requirements using contemporary methods including agile development. Manages the development and assurance of software artefacts applying secure development practises to ensure system resilience. Configures and deploys solutions to end users.
+S3	CORE	Data: identifies organisational information requirements and can model data solutions using conceptual data modelling techniques. Is able to implement a database solution using an industry standard database management system (DBMS). Can perform database administration tasks and is cognisant of the key concepts of data quality and data security. Is able to manage data effectively and undertake data analysis.
+S4	CORE	Cyber Security: can undertake a security risk assessment for a simple IT system and propose resolution advice. Can identify, analyse and evaluate security threats and hazards to planned and installed information systems or services (e.g. Cloud services).
+S5	CORE	Business Organisation: can apply organisational theory, change management, marketing, strategic practice, human resource management and IT service management to technology solutions development. Develops well- reasoned investment proposals and provides business insights.
+S6	CORE	IT Project Management: follows a systematic methodology for initiating, planning, executing, controlling, and closing technology solutions projects. Applies industry standard processes, methods, techniques, and tools to execute projects. Can manage a project (typically less than six months, no inter-dependency with other projects and no strategic impact) including identifying and resolving deviations and the management of problems and escalation processes.
+S7	CORE	Computer and Network Infrastructure: can plan, design, and manage computer networks with an overall focus on the services and capabilities that network infrastructure solutions enable in an organisational context. Identifies network security risks and their resolution.
+Behaviours	Route	Description
+B1	CORE	Fluent in written communications and able to articulate complex issues.
+B2	CORE	Makes concise, engaging and well-structured verbal presentations, arguments and explanations.
+B3	CORE	Able to deal with different, competing interests within and outside the organisation with excellent negotiation skills.
+B4	CORE	Is able to identify the preferences, motivations, strengths and limitations of other people and apply these insights to work more effectively with and to motivate others.
+B5	CORE	Competent in active listening and in leading, influencing and persuading others.
+B6	CORE	Able to give and receive feedback constructively and incorporate it into his/her own development and life-long learning.
+B7	CORE	Applies analytical and critical thinking skills to Technology Solutions development and to systematically analyse and apply structured problem solving techniques to complex systems and situations.
+B8	CORE	Able to put forward, demonstrate value and gain commitment to a moderately complex technology-oriented solution, demonstrating understanding of business need, using open questions and summarising skills and basic negotiating skills.
+B9	CORE	Able to conduct effective research, using literature and other media, into IT and business related topics.
+B10	CORE	Have demonstrated that they have mastered basic business disciplines, ethics and courtesies, demonstrating timeliness and focus when faced with distractions and the ability to complete tasks to a deadline with high quality.
+B11	CORE	Flexible attitude.
+B12	CORE	Ability to perform under pressure.
+B13	CORE	A thorough approach to work.
+B14	CORE	Logical thinking and creative approach to problem solving.
+
+Software Engineer Specialism
+Skills	Route	Description
+S8	Software	Create effective and secure software solutions using contemporary software development languages to deliver the full range of functional and non-functional requirements using relevant development methodologies.
+S9	Software	Undertake analysis and design to create artefacts, such as use cases to produce robust software designs.
+S10	Software	Produce high quality code with sound syntax in at least one language following best practices and standards.
+S11	Software	Perform code reviews, debugging and refactoring to improve code quality and efficiency.
+S12	Software	Test code to ensure that the functional and non-functional requirements have been met.
+S13	Software	Deliver software solutions using industry standard build processes, and tools for configuration management, version control and software build, release and deployment into enterprise environments.
+Knowledge	Route	Description
+K11	Software	How to operate at all stages of the software development lifecycle.
+K12	Software	How teams work effectively to develop software solutions embracing agile and other development approaches.
+K13	Software	How to apply software analysis and design approaches.
+K14	Software	How to interpret and implement a design, compliant with functional, non-functional and security requirements.
+K15	Software	How to perform functional and unit testing.
+K16	Software	How to use and apply the range of software tools used in Software engineering.
+
+See examples:
+User: on monday 7 june i had an information technology lecture on how technology solutions inform business processes.
+Assistant:TABLE_START
+0	1	2	3
+Date + Time	Activity	Reflection/What did you learn?	Hours
+Monday, 07 June 2024 09:00 - Monday, 07 June 2024 13:00	Classroom/Online Lecture	"Activity title:
+Attended Information Technology Lecture
+
+What did you learn?
+Discussed theory surrounding how business technology solutions can be used to inform business processes.
+
+What KSBs has this covered?
+K1 S1"	4
+		"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+
+TABLE_END
+
+User: on tuesday 18th june I had a meeting with my team for the agile web applications module, we discussed the next couple weeks work. this took place in afternoon at 230 lasted 1 hour and a half. then on friday that week i had a morning lecture for agile web apps - lasted 0930 to 1130. we covered risk management and planning. then in the afternoon, 1300 to 1600 i worked on the agile web applications work, completing jira tickets on the database model in our code.
+Assistant:TABLE_START
+0	1	2	3
+Date + Time	Activity	Reflection/What did you learn?	Hours
+Tuesday, 18 June 2024 14:30 - Tuesday, 18 June 2024 16:00	Team Meeting	"Activity title: Agile Web Applications Team Meeting
+
+What did you learn?
+Discussed and planned our work strategy for the next couple of weeks.
+
+What KSBs has this covered?
+K4 K8 S6"	1.5
+Friday, 21 June 2024 09:30 - Friday, 21 June 2024 11:30	Classroom/Online Lecture	"Activity title: Agile Web Applications Lecture
+
+What did you learn?
+We covered risk management and planning in agile web applications.
+
+What KSBs has this covered?
+K9 K10 S6"	2
+Friday, 21 June 2024 13:00 - Friday, 21 June 2024 16:00	Time Spent on Assignments	"Activity title: Agile Web Applications Work
+
+What did you learn?
+Completed Jira tickets on the database model in our code.
+
+What KSBs has this covered?
+S2 S3 S6"	3
+	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+
+TABLE_END
