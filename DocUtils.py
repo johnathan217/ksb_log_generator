@@ -1,114 +1,78 @@
 from typing import List, Optional
 from docx import Document
 from docx.oxml.ns import qn
+from docx.table import Table, _Cell
 from docx.oxml import OxmlElement
-from io import StringIO
 import pandas as pd
+import json
 
 
 class DocUtils:
     @staticmethod
-    def doc_to_string(input_path: str) -> str:
-        doc: Document = Document(input_path)
-        full_text: List[str] = []
-        for table in doc.tables:
-            table_data: List[List[str]] = []
-            for row in table.rows:
-                row_data: List[str] = []
-                for cell in row.cells:
-                    cell_text: str = '\n'.join([para.text for para in cell.paragraphs])
-                    row_data.append(cell_text)
-                table_data.append(row_data)
-            df: pd.DataFrame = pd.DataFrame(table_data)
-            full_text.append('TABLE_START')
-            full_text.append(df.to_csv(index=False, sep='\t'))
-            full_text.append('TABLE_END')
+    def word_table_to_df(doc_path: str, table_index=0) -> pd.DataFrame:
+        doc: Document = Document(doc_path)
+        table: Table = doc.tables[table_index]
 
-        text: str = "\n".join(full_text)
-        return text
-
-    @staticmethod
-    def string_to_doc(text: str, file_path: str, verbose=False) -> None:
-        doc: Document = Document()
-        lines: List[str] = text.split('\n')
-
-        table_data: List[str] = []
-        inside_table: bool = False
-
-        for line in lines:
-            if line == 'TABLE_START':
-                inside_table = True
-                table_data = []
-            elif line == 'TABLE_END':
-                inside_table = False
-                if table_data:
-                    df: pd.DataFrame = pd.read_csv(StringIO('\n'.join(table_data)), sep='\t')
-                    df = df.fillna(' ')
-                    if verbose: print(df.to_string())
-                    table = doc.add_table(rows=df.shape[0], cols=df.shape[1])
-                    for i, row in df.iterrows():
-                        for j, cell in enumerate(row):
-                            table.cell(i, j).text = str(cell)
-
-                    for row in table.rows:
-                        for cell in row.cells:
-                            tc = cell._element
-                            tcPr = tc.get_or_add_tcPr()
-                            tcBorders = OxmlElement('w:tcBorders')
-                            for border_name in ["top", "left", "bottom", "right"]:
-                                border = OxmlElement(f'w:{border_name}')
-                                border.set(qn('w:val'), 'single')
-                                border.set(qn('w:sz'), '4')
-                                border.set(qn('w:space'), '0')
-                                border.set(qn('w:color'), '000000')
-                                tcBorders.append(border)
-                            tcPr.append(tcBorders)
-                table_data = []
-            elif inside_table:
-                table_data.append(line)
+        data: List[List[str]] = []
+        keys = None
+        for i, row in enumerate(table.rows):
+            text = [cell.text for cell in row.cells]
+            if i == 0:
+                keys = text
             else:
-                doc.add_paragraph(line)
+                data.append(text)
 
-        doc.save(file_path)
-
-    @staticmethod
-    def extract_table_content(text: str) -> Optional[str]:
-        start_marker: str = "TABLE_START"
-        end_marker: str = "TABLE_END"
-
-        start_index: int = text.find(start_marker)
-        end_index: int = text.find(end_marker)
-
-        if start_index == -1 or end_index == -1:
-            return None
-
-        end_index += len(end_marker)
-
-        table_content: str = text[start_index:end_index].strip()
-
-        return table_content
+        df = pd.DataFrame(data, columns=keys)
+        return df
 
     @staticmethod
-    def calculate_total_hours(table_string: str) -> float:
-        lines: List[str] = table_string.split('\n')
-        table_data: List[str] = []
-        inside_table: bool = False
+    def df_to_json_string(df: pd.DataFrame) -> str:
+        return json.dumps(json.loads((df.to_json())), indent=4)
 
-        for line in lines:
-            if line == 'TABLE_START':
-                inside_table = True
-                table_data = []
-            elif line == 'TABLE_END':
-                inside_table = False
-                if table_data:
-                    df: pd.DataFrame = pd.read_csv(StringIO('\n'.join(table_data)), sep='\t')
-                    df = df.fillna(' ')
-                    if 'Hours' in df.columns:
-                        hours_total: float = df['Hours'].astype(float).sum()
-                        return hours_total
-                    else:
-                        print("The 'Hours' column was not found in the DataFrame.")
-            elif inside_table:
-                table_data.append(line)
+    @staticmethod
+    def json_string_to_df(json_string: str) -> pd.DataFrame:
+        return pd.read_json(json_string)
 
-        return 0.0
+    @staticmethod
+    def get_total_hours(df: pd.DataFrame) -> float:
+        df['Hours'] = pd.to_numeric(df['Hours'], errors='coerce')
+        return df['Hours'].sum()
+
+    @staticmethod
+    def df_to_doc(df: pd.DataFrame) -> Document:
+        doc: Document = Document()
+        doc.add_heading('Apprenticeship Log', level=1)
+
+        table: Table = doc.add_table(rows=1, cols=len(df.columns))
+
+        hdr_cells = table.rows[0].cells
+        for i, column in enumerate(df.columns):
+            hdr_cells[i].text = column
+            DocUtils.set_cell_border(hdr_cells[i])
+
+        for index, row in df.iterrows():
+            row_cells = table.add_row().cells
+            for i, cell in enumerate(row):
+                row_cells[i].text = str(cell)
+                DocUtils.set_cell_border(row_cells[i])
+
+        return doc
+
+    @staticmethod
+    def set_cell_border(cell: _Cell, border_type: str = "single", size: int = 6, color: str = "000000", space: int = 0) -> None:
+        tc = cell._tc
+        tcPr = tc.get_or_add_tcPr()
+
+        borders = tcPr.find(qn('w:tcBorders'))
+        if borders is None:
+            borders = OxmlElement('w:tcBorders')
+            tcPr.append(borders)
+
+        for edge in ('top', 'start', 'bottom', 'end'):
+            edge_tag = f'w:{edge}'
+            element = OxmlElement(edge_tag)
+            element.set(qn('w:val'), border_type)
+            element.set(qn('w:sz'), str(size))
+            element.set(qn('w:space'), str(space))
+            element.set(qn('w:color'), color)
+            borders.append(element)
