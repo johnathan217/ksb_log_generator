@@ -1,4 +1,4 @@
-The assistant will receive a plain text description of apprenticeship activities. Please populate the provided form, given in json format, with these details, and select some appropriate KSBs from the options - do not use more than 3 KSBs per entry, though you may use less. Remember that they must fit the content of the entry. The assistant should reply only with the table in the json format of the example given below. If there are more entries than can fit in the current table, the assistant should add more rows in the same format.
+The assistant will receive a plain text description of apprenticeship activities. Please populate the provided form with these details, and select some appropriate KSBs from the options - do not use more than 3 KSBs per entry, thought you may use less. Remember that they must fit the content of the entry. The assistant should reply only with the table in the format of the example given below. If there are more entries than can fit in the current table, the assistant should add more rows in the same format.
 KSBs:
 Knowledge	Route	Description
 K1	CORE	How business exploits technology solutions for competitive advantage.
@@ -51,59 +51,103 @@ K14	Software	How to interpret and implement a design, compliant with functional,
 K15	Software	How to perform functional and unit testing.
 K16	Software	How to use and apply the range of software tools used in Software engineering.
 
-See example:
+See examples:
+User: on monday 7 june i had an information technology lecture on how technology solutions inform business processes.
+Assistant:TABLE_START
+0	1	2	3
+Date + Time	Activity	Reflection/What did you learn?	Hours
+Monday, 07 June 2024 09:00 - Monday, 07 June 2024 13:00	Classroom/Online Lecture	"Activity title:
+Attended Information Technology Lecture
+
+What did you learn?
+Discussed theory surrounding how business technology solutions can be used to inform business processes.
+
+What KSBs has this covered?
+K1 S1"	4
+		"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?
+"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+
+TABLE_END
+
 User: on tuesday 18th june I had a meeting with my team for the agile web applications module, we discussed the next couple weeks work. this took place in afternoon at 230 lasted 1 hour and a half. then on friday that week i had a morning lecture for agile web apps - lasted 0930 to 1130. we covered risk management and planning. then in the afternoon, 1300 to 1600 i worked on the agile web applications work, completing jira tickets on the database model in our code.
-Assistant:{
-    "Date + Time": {
-        "0": "Tuesday, 18 June 2024 14:30 - Tuesday, 18 June 2024 15:30",
-        "1": "Friday, 21 June 2024 09:30 - Friday, 21 June 2024 11:30",
-        "2": "Friday, 21 June 2024 13:00 - Friday, 21 June 2024 16:00",
-        "3": " ",
-        "4": " ",
-        "5": " ",
-        "6": " ",
-        "7": " ",
-        "8": " ",
-        "9": " ",
-        "10": " "
-    },
-    "Activity": {
-        "0": "Team Meeting",
-        "1": "Classroom/Online Lecture",
-        "2": "Time Spent on Assignments",
-        "3": " ",
-        "4": " ",
-        "5": " ",
-        "6": " ",
-        "7": " ",
-        "8": " ",
-        "9": " ",
-        "10": " "
-    },
-    "Reflection/What did you learn?": {
-        "0": "Activity title:\nAgile Web Applications Team Meeting\n\nWhat did you learn?\nDiscussed and planned our work strategy for the next couple of weeks.\n\nWhat KSBs has this covered?\nK4 K8 S6",
-        "1": "Activity title:\nAgile Web Applications Lecture\n\nWhat did you learn?\nWe covered risk management and planning in agile web applications\n\nWhat KSBs has this covered?\nK9 K10 S6",
-        "2": "Activity title:\nAgile Web Applications Work\n\nWhat did you learn?\nCompleted Jira tickets on the database model in our code\n\nWhat KSBs has this covered?\nS2 S3 S6",
-        "3": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?\n",
-        "4": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?\n",
-        "5": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?\n",
-        "6": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?\n",
-        "7": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?\n",
-        "8": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?",
-        "9": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?",
-        "10": "Activity title:\nWhat did you learn?\nWhat KSBs has this covered?"
-    },
-    "Hours": {
-        "0": "1.5",
-        "1": "2.0",
-        "2": "3.0",
-        "3": " ",
-        "4": " ",
-        "5": " ",
-        "6": " ",
-        "7": " ",
-        "8": " ",
-        "9": " ",
-        "10": " "
-    }
-}
+Assistant:TABLE_START
+0	1	2	3
+Date + Time	Activity	Reflection/What did you learn?	Hours
+Tuesday, 18 June 2024 14:30 - Tuesday, 18 June 2024 16:00	Team Meeting	"Activity title: Agile Web Applications Team Meeting
+
+What did you learn?
+Discussed and planned our work strategy for the next couple of weeks.
+
+What KSBs has this covered?
+K4 K8 S6"	1.5
+Friday, 21 June 2024 09:30 - Friday, 21 June 2024 11:30	Classroom/Online Lecture	"Activity title: Agile Web Applications Lecture
+
+What did you learn?
+We covered risk management and planning in agile web applications.
+
+What KSBs has this covered?
+K9 K10 S6"	2
+Friday, 21 June 2024 13:00 - Friday, 21 June 2024 16:00	Time Spent on Assignments	"Activity title: Agile Web Applications Work
+
+What did you learn?
+Completed Jira tickets on the database model in our code.
+
+What KSBs has this covered?
+S2 S3 S6"	3
+	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+ 	 	"Activity title:
+What did you learn?
+What KSBs has this covered?"
+
+TABLE_END
