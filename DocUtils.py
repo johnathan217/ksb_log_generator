@@ -40,6 +40,7 @@ class DocUtils:
 
     @staticmethod
     def df_to_doc(df: pd.DataFrame) -> Document:
+        df = df.fillna('')
         doc: Document = Document()
         doc.add_heading('Apprenticeship Log', level=1)
 
@@ -59,7 +60,8 @@ class DocUtils:
         return doc
 
     @staticmethod
-    def set_cell_border(cell: _Cell, border_type: str = "single", size: int = 6, color: str = "000000", space: int = 0) -> None:
+    def set_cell_border(cell: _Cell, border_type: str = "single", size: int = 6, color: str = "000000",
+                        space: int = 0) -> None:
         tc = cell._tc
         tcPr = tc.get_or_add_tcPr()
 
@@ -76,3 +78,7 @@ class DocUtils:
             element.set(qn('w:space'), str(space))
             element.set(qn('w:color'), color)
             borders.append(element)
+
+    @staticmethod
+    def create_filename(hours, name, date):
+        return f"ActivityLog_{name}_{hours}_{date}"
