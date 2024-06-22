@@ -16,7 +16,7 @@ name: str = "Johnathan Phillips"
 
 
 def main() -> None:
-    # u_input: str = input("> ")
+    u_input: str = input("> ")
     u_input = "on monday 7 june between 0900 and 1300 i had an information technology lecture on how technology solutions inform business processes."
     with open("system_prompt_docwriter.txt", 'r') as file:
         docwriter: GPT4ChatBot = GPT4ChatBot(file.read())
