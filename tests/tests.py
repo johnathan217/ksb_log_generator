@@ -3,15 +3,10 @@ import json
 import pandas as pd
 
 from DocUtils import DocUtils
-from test_string import test_string
 
 
 class Tests:
     df = DocUtils.word_table_to_df("tests/testdoc.docx")
-
-    @staticmethod
-    def test_string_to_doc():
-        DocUtils.string_to_doc(test_string, "tests/output_test_string_to_doc.docx", True)
 
     @staticmethod
     def test_word_table_to_df():
@@ -48,9 +43,10 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 
-# Tests.DfInterp.test_json_df()
+Tests.DfInterp.test_json_df()
 # Tests.DfInterp.test_string_df()
 # Tests.DfInterp.test_csv_df()
 # Tests.test_word_table_to_df()
 #Tests.test_df_to_doc()
-Tests.test_get_total_hours()
+# Tests.test_get_total_hours()
+Tests.test_string_to_doc()

@@ -1,3 +1,4 @@
+from io import StringIO
 from typing import List, Optional
 from docx import Document
 from docx.oxml.ns import qn
