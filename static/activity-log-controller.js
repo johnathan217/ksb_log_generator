@@ -12,7 +12,9 @@ class ActivityLogController {
         const entriesDiv = document.getElementById('entries');
         const newEntry = entriesDiv.children[0].cloneNode(true);
         newEntry.querySelector('.week').value = '';
-        newEntry.querySelector('.activity').value = '';
+        const newActivity = newEntry.querySelector('.activity');
+        newActivity.value = '';
+        newActivity.style.height = '2.5rem'; // Reset height to default
         newEntry.querySelector('.remove-entry').addEventListener('click', (e) => this.removeEntry(e.target));
         entriesDiv.appendChild(newEntry);
     }

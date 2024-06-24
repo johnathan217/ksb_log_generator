@@ -3,26 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activity Log Generator</title>
+    <title>Activity Log</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <script src="{{ url_for('static', filename='activity-log-controller.js') }}"></script>
+    <style>
+        .expandable-input {
+            resize: vertical;
+            min-height: 2.5rem;
+            height: 2.5rem;
+            overflow-y: hidden;
+        }
+        .entry {
+            display: flex;
+            align-items: flex-start;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            100: '#E2E8E4',
+                            200: '#C5D1C8',
+                            300: '#A8BBAC',
+                            400: '#8BA490',
+                            500: '#6E8D74',
+                            600: '#587059',
+                            700: '#42533F',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body class="bg-gray-100 p-8">
+<body class="bg-sage-100 p-8">
     <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow">
-        <h1 class="text-2xl font-bold mb-4">Activity Log</h1>
+        <h1 class="text-2xl font-bold mb-4 text-sage-700">Activity Log</h1>
         <form id="logForm" class="space-y-4">
             <div id="entries">
-                <div class="entry flex space-x-2 mb-2">
-                    <input type="week" class="week border p-2 rounded" required>
-                    <input type="text" class="activity border p-2 rounded flex-grow" placeholder="Enter activity" required>
-                    <button type="button" class="remove-entry bg-red-500 text-white p-2 rounded">-</button>
+                <div class="entry space-x-2 mb-2">
+                    <input type="week" class="week border border-sage-300 p-2 rounded w-40 focus:border-sage-500 focus:ring focus:ring-sage-200 focus:ring-opacity-50" required>
+                    <textarea class="activity expandable-input border border-sage-300 p-2 rounded flex-grow focus:border-sage-500 focus:ring focus:ring-sage-200 focus:ring-opacity-50" placeholder="Enter activity" required></textarea>
+                    <button type="button" class="remove-entry bg-sage-300 hover:bg-sage-400 text-sage-700 p-2 rounded transition duration-150 ease-in-out">-</button>
                 </div>
             </div>
-            <button type="button" id="addEntryBtn" class="bg-blue-500 text-white p-2 rounded">+</button>
-            <button type="submit" class="bg-blue-500 text-white p-2 rounded">Submit</button>
+            <button type="button" id="addEntryBtn" class="bg-sage-400 hover:bg-sage-500 text-white p-2 rounded transition duration-150 ease-in-out">+</button>
+            <button type="submit" class="bg-sage-600 hover:bg-sage-700 text-white p-2 rounded transition duration-150 ease-in-out">Submit</button>
         </form>
-        <div id="result" class="mt-4"></div>
+        <div id="result" class="mt-4 text-sage-600"></div>
     </div>
+
+    <script>
+        document.addEventListener('input', function (e) {
+            if (e.target.classList.contains('expandable-input')) {
+                e.target.style.height = 'auto';
+                e.target.style.height = (e.target.scrollHeight) + 'px';
+            }
+        }, false);
+    </script>
 </body>
 </html>

@@ -1,13 +1,10 @@
 import json
-import sys
-
 from flask import Flask, render_template, request, jsonify
 import os
 from dotenv import load_dotenv
-from DocUtils import DocUtils
-from chatbots import GPT4ChatBot
 import openai
 from datetime import datetime, timedelta
+from process import Process as P
 
 app = Flask(__name__)
 
@@ -28,7 +25,7 @@ def index():
 def submit():
     data = request.json
 
-    log_with_timestamp(json.dumps(data, indent=2))
+    P.log_with_timestamp(json.dumps(data, indent=2))
 
     return jsonify({
         "message": "Document created successfully",
@@ -36,13 +33,6 @@ def submit():
     })
 
 
-def log_with_timestamp(message, file=None):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    day = datetime.now().strftime("%Y-%m-%d")
-    log_message = f"[{timestamp}] {message}"
-
-    with open(f'logs/app_{day}.log', 'a') as f:
-        f.write(log_message + "\n")
 
 
 if __name__ == '__main__':
