@@ -1,6 +1,6 @@
-import datetime
+from datetime import datetime
 from enum import Enum
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 import pandas as pd
 from docx import Document
@@ -10,7 +10,7 @@ from chatbots import GPT4ChatBot, ChatBot
 
 class Process:
     @staticmethod
-    def produce_doc(gpt: ChatBot, plain_text_log: str, output_path: str, verbose: bool = False) -> None:
+    def produce_doc(gpt: ChatBot, plain_text_log: str, verbose: bool = False) -> tuple[Document, float]:
         json_string: str = gpt.get_json_response(plain_text_log)
         if verbose: print(f"\nJSON STRING: {json_string}")
         Process.log_with_timestamp(f"\nJSON STRING: {json_string}")
@@ -20,7 +20,7 @@ class Process:
         if verbose: print(f"\nHOURS: {hours}")
         Process.log_with_timestamp(f"\nHOURS: {hours}")
         doc: Document = Du.df_to_doc(df)
-        doc.save(output_path)
+        return doc, hours
 
     @staticmethod
     def process_submit(json, ):

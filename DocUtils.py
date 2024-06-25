@@ -82,3 +82,7 @@ class DocUtils:
     @staticmethod
     def create_filename(hours, name, date):
         return f"ActivityLog_{name}_{hours}_{date}"
+
+    @staticmethod
+    def save_doc(doc: Document, filename: str):
+        doc.save(f"outputs/{filename}")
