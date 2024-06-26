@@ -14,10 +14,10 @@ load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
-if not os.path.exists('logs'):
-    os.makedirs('logs')
-if not os.path.exists('outputs'):
-    os.makedirs('outputs')
+if not os.path.exists('../logs'):
+    os.makedirs('../logs')
+if not os.path.exists('../outputs'):
+    os.makedirs('../outputs')
 
 
 @app.route('/')

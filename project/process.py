@@ -30,7 +30,7 @@ class Process:
         day: str = datetime.now().strftime("%d-%m-%Y")
         log_message: str = f"[{timestamp}] {message}"
 
-        with open(f'logs/app_{day}.log', 'a') as f:
+        with open(f'../logs/app_{day}.log', 'a') as f:
             f.write(log_message + "\n")
 
     @staticmethod

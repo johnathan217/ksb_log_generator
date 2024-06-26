@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from docUtils import DocUtils
+from project.docUtils import DocUtils
 from test_string import test_string
 
 

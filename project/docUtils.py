@@ -89,4 +89,6 @@ class DocUtils:
 
     @staticmethod
     def save_doc(doc: Document, filename: str):
-        doc.save(f"outputs/{filename}")
+        doc.save(f"../outputs/{filename}")
+        from process import Process as p
+        p.log_with_timestamp(f"Document {filename} saved.")
