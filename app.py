@@ -1,13 +1,12 @@
-import json
-from flask import Flask, render_template, request, jsonify
-import os
-from dotenv import load_dotenv
-import openai
-from datetime import datetime
-from process import Process as P
-from chatbots import GPT4ChatBot
-from DocUtils import DocUtils
 import concurrent.futures
+import json
+import os
+
+import openai
+from dotenv import load_dotenv
+from flask import Flask, render_template, request, jsonify
+
+from process import Process as p
 
 app = Flask(__name__)
 
@@ -29,11 +28,11 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.json
-    P.log_with_timestamp(json.dumps(data, indent=2))
+    p.log_with_timestamp(json.dumps(data, indent=2))
 
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        future_to_entry = {executor.submit(P.process_entry, entry): entry for entry in data["entries"]}
+        future_to_entry = {executor.submit(p.process_entry, entry): entry for entry in data["entries"]}
         for future in concurrent.futures.as_completed(future_to_entry):
             entry = future_to_entry[future]
             try:
