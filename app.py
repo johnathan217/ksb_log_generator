@@ -3,16 +3,17 @@ from flask import Flask, render_template, request, jsonify
 import os
 from dotenv import load_dotenv
 import openai
-from datetime import datetime, timedelta
+from datetime import datetime
 from process import Process as P
-from chatbots import ChatBot, GPT4ChatBot
+from chatbots import GPT4ChatBot
 from DocUtils import DocUtils
+import concurrent.futures
 
 app = Flask(__name__)
 
 load_dotenv()
 openai.api_key = os.getenv('OPENAI_API_KEY')
-name = "Johnathan Phillips"
+
 
 if not os.path.exists('logs'):
     os.makedirs('logs')
@@ -28,18 +29,22 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.json
-
     P.log_with_timestamp(json.dumps(data, indent=2))
-    with open("system_prompt_docwriter.txt", 'r') as file:
-        docWriter: GPT4ChatBot = GPT4ChatBot(file.read())
 
-    doc, hours = P.produce_doc(docWriter, data["entries"][0]["description"])
-    fileName = DocUtils.create_filename(hours, name, data["entries"][0]["week"])
-    DocUtils.save_doc(doc, fileName)
+    results = []
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_entry = {executor.submit(P.process_entry, entry): entry for entry in data["entries"]}
+        for future in concurrent.futures.as_completed(future_to_entry):
+            entry = future_to_entry[future]
+            try:
+                result = future.result()
+                results.append(result)
+            except Exception as exc:
+                print(f'Entry {entry} generated an exception: {exc}')
 
     return jsonify({
-        "message": "Document created successfully",
-        "filename": f"{fileName}"
+        "message": "Documents created successfully",
+        "results": results
     })
 
 

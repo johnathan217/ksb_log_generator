@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Optional
 from docx import Document
 from docx.oxml.ns import qn
@@ -80,8 +81,11 @@ class DocUtils:
             borders.append(element)
 
     @staticmethod
-    def create_filename(hours, name, date):
-        return f"ActivityLog_{name}_{hours}_{date}"
+    def create_filename(hours, name, date_str):
+        date = datetime.strptime(date_str, "%d/%m/%Y")
+        formatted_date = date.strftime("%d-%m-%Y")
+        safe_name = name.replace(" ", "_")
+        return f"ActivityLog_{safe_name}_{hours}_{formatted_date}.docx"
 
     @staticmethod
     def save_doc(doc: Document, filename: str):
