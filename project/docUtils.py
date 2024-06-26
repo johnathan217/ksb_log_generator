@@ -1,3 +1,4 @@
+from io import StringIO
 from datetime import datetime
 from typing import List, Optional
 from docx import Document
@@ -32,7 +33,7 @@ class DocUtils:
 
     @staticmethod
     def json_string_to_df(json_string: str) -> pd.DataFrame:
-        return pd.read_json(json_string)
+        return pd.read_json(StringIO(json_string))
 
     @staticmethod
     def get_total_hours(df: pd.DataFrame) -> float:
@@ -89,6 +90,7 @@ class DocUtils:
 
     @staticmethod
     def save_doc(doc: Document, filename: str):
-        doc.save(f"../outputs/{filename}")
+        full_path: str = f"../outputs/{filename}"
+        doc.save(full_path)
         from process import Process as p
         p.log_with_timestamp(f"Document {filename} saved.")

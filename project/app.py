@@ -41,9 +41,11 @@ def submit():
             except Exception as exc:
                 print(f'Entry {entry} generated an exception: {exc}')
 
+    filenames = [result['filename'] for result in results]
+    doc_str: str = "documents" if (len(results) > 1) else "document"
     return jsonify({
-        "message": "Documents created successfully",
-        "results": results
+        "message": f"{len(results)} {doc_str} created successfully:",
+        "filenames": filenames
     })
 
 

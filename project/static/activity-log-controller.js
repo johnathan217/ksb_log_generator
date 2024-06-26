@@ -1,6 +1,8 @@
 class ActivityLogController {
     constructor() {
         this.bindEvents();
+        this.submitBtn = document.getElementById('submitBtn');
+        this.resultDiv = document.getElementById('result');
     }
 
     bindEvents() {
@@ -39,6 +41,9 @@ class ActivityLogController {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.setProcessingState(true);
+        // this.resultDiv.textContent = 'Processing your request...';
+
         const entries = [];
         document.querySelectorAll('.entry').forEach(entry => {
             const weekValue = entry.querySelector('.week').value;
@@ -58,14 +63,45 @@ class ActivityLogController {
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById('result').textContent = `${data.message}: ${data.filename}`;
+            let resultsHtml = `<p>${data.message}</p>`;
+            if (data.filenames && data.filenames.length > 0) {
+                resultsHtml += '<ul>';
+                data.filenames.forEach(filename => {
+                    resultsHtml += `<li>${filename}</li>`;
+                });
+                resultsHtml += '</ul>';
+            }
+            this.resultDiv.innerHTML = resultsHtml;
         })
         .catch((error) => {
             console.error('Error:', error);
+            this.resultDiv.textContent = 'An error occurred while processing your request.';
+        })
+        .finally(() => {
+            this.setProcessingState(false);
         });
     }
-}
 
+    setProcessingState(isProcessing) {
+        const defaultText = this.submitBtn.querySelector('.default-text');
+        const processingText = this.submitBtn.querySelector('.processing-text');
+        const spinner = this.submitBtn.querySelector('svg');
+
+        if (isProcessing) {
+            this.submitBtn.disabled = true;
+            this.submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            defaultText.classList.add('hidden');
+            processingText.classList.remove('hidden');
+            spinner.classList.remove('hidden');
+        } else {
+            this.submitBtn.disabled = false;
+            this.submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            defaultText.classList.remove('hidden');
+            processingText.classList.add('hidden');
+            spinner.classList.add('hidden');
+        }
+    }
+}
 document.addEventListener('DOMContentLoaded', () => {
     new ActivityLogController();
 });
