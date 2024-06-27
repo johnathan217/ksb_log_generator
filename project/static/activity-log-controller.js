@@ -8,12 +8,18 @@ class ActivityLogController {
     bindEvents() {
         document.getElementById('addEntryBtn').addEventListener('click', () => this.addEntry());
         document.getElementById('logForm').addEventListener('submit', (e) => this.handleSubmit(e));
+        document.addEventListener('input', (e) => {
+            if (e.target.type === 'week') {
+                this.updateDateDisplay(e.target);
+            }
+        });
     }
 
     addEntry() {
         const entriesDiv = document.getElementById('entries');
         const newEntry = entriesDiv.children[0].cloneNode(true);
         newEntry.querySelector('.week').value = '';
+        newEntry.querySelector('.date-display').textContent = '';
         const newActivity = newEntry.querySelector('.activity');
         newActivity.value = '';
         newActivity.style.height = '2.5rem'; // Reset height to default
@@ -24,6 +30,17 @@ class ActivityLogController {
     removeEntry(button) {
         if (document.querySelectorAll('.entry').length > 1) {
             button.closest('.entry').remove();
+        }
+    }
+
+    updateDateDisplay(weekInput) {
+        const dateDisplay = weekInput.parentElement.querySelector('.date-display');
+        const selectedWeek = weekInput.value;
+        if (selectedWeek) {
+            const monday = this.getMondayOfWeek(selectedWeek);
+            dateDisplay.textContent = this.formatDateUK(monday);
+        } else {
+            dateDisplay.textContent = '';
         }
     }
 
@@ -42,12 +59,11 @@ class ActivityLogController {
     handleSubmit(e) {
         e.preventDefault();
         this.setProcessingState(true);
-        // this.resultDiv.textContent = 'Processing your request...';
 
         const entries = [];
         document.querySelectorAll('.entry').forEach(entry => {
-            const weekValue = entry.querySelector('.week').value;
-            const monday = this.getMondayOfWeek(weekValue);
+            const weekInput = entry.querySelector('.week');
+            const monday = this.getMondayOfWeek(weekInput.value);
             entries.push({
                 week: this.formatDateUK(monday),
                 description: entry.querySelector('.activity').value
@@ -102,6 +118,7 @@ class ActivityLogController {
         }
     }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     new ActivityLogController();
 });
