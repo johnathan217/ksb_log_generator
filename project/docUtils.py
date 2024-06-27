@@ -1,3 +1,4 @@
+import os
 from io import StringIO
 from datetime import datetime
 from typing import List, Optional
@@ -82,15 +83,38 @@ class DocUtils:
             borders.append(element)
 
     @staticmethod
-    def create_filename(hours, name, date_str):
+    def save_doc(doc: Document, entry: json, hours: float) -> str:
+        from process import Process as p
+        filename = DocUtils.create_filename(hours, p.name, entry["week"])
+        directory: str = DocUtils.get_directory(entry["week"])
+        full_path: str = f"../outputs/{directory}/{filename}"
+        doc.save(full_path)
+        p.log_with_timestamp(f"Document {filename} saved.")
+        return filename
+
+    @staticmethod
+    def create_filename(hours, name, date_str) -> str:
         date = datetime.strptime(date_str, "%d/%m/%Y")
         formatted_date = date.strftime("%d-%m-%Y")
         safe_name = name.replace(" ", "_")
         return f"ActivityLog_{safe_name}_{hours}_{formatted_date}.docx"
 
     @staticmethod
-    def save_doc(doc: Document, filename: str):
-        full_path: str = f"../outputs/{filename}"
-        doc.save(full_path)
-        from process import Process as p
-        p.log_with_timestamp(f"Document {filename} saved.")
+    def get_directory(date: str) -> str:
+        date_obj = datetime.strptime(date, "%d/%m/%Y")
+        month, year = date_obj.strftime("%B"), date_obj.strftime("%Y")
+        directory = DocUtils.make_directory_name(month, year)
+        if not os.path.exists(f'../outputs/{directory}'):
+            os.makedirs(f'../outputs/{directory}')
+        return directory
+
+    @staticmethod
+    def make_directory_name(month: str, year: str) -> str:
+        month_order = {
+            "January": "01", "February": "02", "March": "03",
+            "April": "04", "May": "05", "June": "06",
+            "July": "07", "August": "08", "September": "09",
+            "October": "10", "November": "11", "December": "12"
+        }
+        return f"{month_order[month]}_{month}-{year}"
+
