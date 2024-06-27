@@ -7,12 +7,13 @@ from dotenv import load_dotenv
 from flask import Flask, render_template, request, jsonify
 
 from process import Process as p
+from logfile import Logging as l
+from config import Config
 
 app = Flask(__name__)
 
 load_dotenv()
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
+openai.api_key = Config.openai_api_key
 
 if not os.path.exists('../logs'):
     os.makedirs('../logs')
@@ -28,7 +29,7 @@ def index():
 @app.route('/submit', methods=['POST'])
 def submit():
     data = request.json
-    p.log_with_timestamp(json.dumps(data, indent=2))
+    l.log_with_timestamp(json.dumps(data, indent=2))
 
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:

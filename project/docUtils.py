@@ -1,16 +1,22 @@
+import json
 import os
-from io import StringIO
 from datetime import datetime
-from typing import List, Optional
+from io import StringIO
+from typing import List
+
+import pandas as pd
 from docx import Document
+from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 from docx.table import Table, _Cell
-from docx.oxml import OxmlElement
-import pandas as pd
-import json
+
+from config import Config
+from logfile import Logging as l
 
 
 class DocUtils:
+    out_directory = "test_outputs" if Config.testing else "outputs"
+
     @staticmethod
     def word_table_to_df(doc_path: str, table_index=0) -> pd.DataFrame:
         doc: Document = Document(doc_path)
@@ -83,13 +89,12 @@ class DocUtils:
             borders.append(element)
 
     @staticmethod
-    def save_doc(doc: Document, entry: json, hours: float) -> str:
-        from process import Process as p
-        filename = DocUtils.create_filename(hours, p.name, entry["week"])
-        directory: str = DocUtils.get_directory(entry["week"])
-        full_path: str = f"../outputs/{directory}/{filename}"
+    def save_doc(doc: Document, week: str, hours: float) -> str:
+        filename = DocUtils.create_filename(hours, Config.name, week)
+        directory: str = DocUtils.get_directory(week)
+        full_path: str = f"../{DocUtils.out_directory}/{directory}/{filename}"
         doc.save(full_path)
-        p.log_with_timestamp(f"Document {filename} saved.")
+        l.log_with_timestamp(f"Document {full_path} saved.")
         return filename
 
     @staticmethod
@@ -103,10 +108,10 @@ class DocUtils:
     def get_directory(date: str) -> str:
         date_obj = datetime.strptime(date, "%d/%m/%Y")
         month, year = date_obj.strftime("%B"), date_obj.strftime("%Y")
-        directory = DocUtils.make_directory_name(month, year)
-        if not os.path.exists(f'../outputs/{directory}'):
-            os.makedirs(f'../outputs/{directory}')
-        return directory
+        month_directory: str = DocUtils.make_directory_name(month, year)
+        if not os.path.exists(f'../{DocUtils.out_directory}/{month_directory}'):
+            os.makedirs(f'../{DocUtils.out_directory}/{month_directory}')
+        return month_directory
 
     @staticmethod
     def make_directory_name(month: str, year: str) -> str:
@@ -117,4 +122,3 @@ class DocUtils:
             "October": "10", "November": "11", "December": "12"
         }
         return f"{month_order[month]}_{month}-{year}"
-
