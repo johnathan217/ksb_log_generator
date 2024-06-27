@@ -37,7 +37,7 @@ class Process:
     def process_entry(entry: json):
         with open("system_prompt_docwriter.txt", 'r') as file:
             docWriter: ChatBot = GPT4ChatBot(file.read())
-        plain_text_log: str = f'The following log refers to the week {entry["week"]}. {entry["description"]}'
+        plain_text_log: str = f'The following log refers to the week beginning on Monday {entry["week"]}. {entry["description"]}'
         doc, hours = Process.produce_doc(docWriter, plain_text_log)
         fileName = Du.create_filename(hours, Process.name, entry["week"])
         Du.save_doc(doc, fileName)
