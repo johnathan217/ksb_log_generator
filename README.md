@@ -4,6 +4,7 @@
 - Saves doc with appropriate filename, including hours spent that week, date, and name.
 - Uses OpenAI API to match KSBs and convert rough language to polished upload-ready account.
 - Process multiple docs at once!
+- Write as crudely, with as many spellign and punctuation errors, as you desire!
 
 **See Demo:**
 
