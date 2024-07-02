@@ -5,12 +5,18 @@
 - Uses OpenAI API to match KSBs and convert rough language to polished upload-ready account.
 - Process multiple docs at once!
 
-**See Demo:**
+## Demo
 
 
 
 
 https://github.com/johnathan217/ksb_log_generator/assets/113518999/f9030c0d-86e9-4aba-9148-0ac46e0879af
+
+**Documents created in demo:**    
+
+[ActivityLog_Johnathan_Phillips_6.0_17-06-2024.docx](https://github.com/user-attachments/files/16069604/ActivityLog_Johnathan_Phillips_6.0_17-06-2024.docx)    
+
+[ActivityLog_Johnathan_Phillips_7.0_24-06-2024.docx](https://github.com/user-attachments/files/16069625/ActivityLog_Johnathan_Phillips_7.0_24-06-2024.docx)
 
 
 ## Prerequisites
