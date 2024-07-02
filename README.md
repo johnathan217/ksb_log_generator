@@ -71,3 +71,5 @@ python app.py
 This should start the flask app, showing a message like the image below. Look for 'Running on' to see the url you need to use the app.
 ![image](https://github.com/johnathan217/ksb_log_generator/assets/113518999/2bdf3097-9eaa-4458-b118-dfa4d329d66c)
 
+On start, the app will create logs and outputs directories in the project root.
+
