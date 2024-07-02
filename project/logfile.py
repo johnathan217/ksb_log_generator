@@ -3,7 +3,7 @@ from datetime import datetime
 
 class Logging:
     @staticmethod
-    def log_with_timestamp(message: str):
+    def log_with_timestamp(message: str) -> None:
         timestamp: str = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
         date: str = datetime.now().strftime("%d-%m-%Y")
         log_message: str = f"[{timestamp}] {message}"

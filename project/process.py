@@ -23,10 +23,10 @@ class Process:
         return doc, hours
 
     @staticmethod
-    def process_entry(entry: json):
+    def process_entry(entry: json) -> dict:
         with open("system_prompt_docwriter.txt", 'r') as file:
             docWriter: ChatBot = GPT4ChatBot(file.read())
-        plain_text_log: str = f'The following log refers to the week beginning on Monday {entry["week"]}. {entry["description"]}'
-        doc, hours = Process.produce_doc(docWriter, plain_text_log)
+        prompt: str = f'The following log refers to the week beginning on Monday {entry["week"]}. {entry["description"]}'
+        doc, hours = Process.produce_doc(docWriter, prompt)
         filename = Du.save_doc(doc, entry["week"], hours)
         return {"filename": filename, "hours": hours}
