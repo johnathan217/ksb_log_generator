@@ -65,7 +65,7 @@ NAME=your_name
 ```
 Replace your_openai_api_key with your actual [OpenAI API key](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key) and your_name with your name (used for creating the log filenames)
 
-## Running the application
+## Running
 #### 1. Navigate to the project directory:
 ```sh
 cd project
