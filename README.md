@@ -19,10 +19,6 @@ https://github.com/johnathan217/ksb_log_generator/assets/113518999/f9030c0d-86e9
 [ActivityLog_Johnathan_Phillips_7.0_24-06-2024.docx](https://github.com/user-attachments/files/16069625/ActivityLog_Johnathan_Phillips_7.0_24-06-2024.docx)
 
 
-## Prerequisites
-Before you begin, ensure you have:
-* Installed python - this project was made with 3.11.16
-* Installed git
 
 ## Installation
 #### 1. Clone the repository:
